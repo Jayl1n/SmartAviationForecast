@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cap.dao.EventViewMapper2">
+    <resultMap id="EventViewResultMap" type="edu.cap.model.po.EventView">
+        <result column="event_hash" jdbcType="VARCHAR" property="eventHash"/>
+        <result column="event_name" jdbcType="VARCHAR" property="eventName"/>
+        <result column="event_area" jdbcType="VARCHAR" property="eventArea"/>
+        <result column="event_type" jdbcType="INTEGER" property="eventType"/>
+        <result column="event_heat" jdbcType="INTEGER" property="eventHeat"/>
+        <result column="event_history" jdbcType="INTEGER" property="eventHistory"/>
+        <result column="event_begin_date" jdbcType="DATE" property="eventBeginDate"/>
+        <result column="event_finish_date" jdbcType="DATE" property="eventFinishDate"/>
+        <result column="event_type_raw" jdbcType="VARCHAR" property="eventTypeRaw"/>
+        <result column="event_heat_raw" jdbcType="VARCHAR" property="eventHeatRaw"/>
+        <result column="event_history_raw" jdbcType="VARCHAR" property="eventHistoryRaw"/>
+        <result column="event_frequency_year" jdbcType="INTEGER" property="eventFrequencyYear"/>
+        <result column="event_frequency_year_raw" jdbcType="VARCHAR" property="eventFrequencyYearRaw"/>
+        <result column="event_organizer_type" jdbcType="INTEGER" property="eventOrganizerType"/>
+        <result column="event_organizer_level" jdbcType="INTEGER" property="eventOrganizerLevel"/>
+        <result column="event_influence_age" jdbcType="INTEGER" property="eventInfluenceAge"/>
+        <result column="event_max_influence" jdbcType="INTEGER" property="eventMaxInfluence"/>
+        <result column="event_has_fixed_population" jdbcType="INTEGER" property="eventHasFixedPopulation"/>
+        <result column="event_influence_type" jdbcType="INTEGER" property="eventInfluenceType"/>
+        <result column="event_organizer" jdbcType="VARCHAR" property="eventOrganizer"/>
+    </resultMap>
+
+    <resultMap id="GeoChartVOResultMap" type="edu.cap.model.vo.GeoChartVO">
+        <result column="event_area" jdbcType="VARCHAR" property="areaName"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+    <resultMap id="CalendarChartVOResultMap" type="edu.cap.model.vo.CalendarChartVO">
+        <result column="event_date" jdbcType="DATE" property="date"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="EventView_Column_List">
+        event_hash, event_name, event_area, event_type, event_heat, event_history, event_begin_date,
+        event_finish_date, event_heat_raw, event_history_raw, event_frequency_year,
+        event_frequency_year_raw, event_organizer_type, event_organizer_level, event_influence_age,
+        event_max_influence, event_has_fixed_population, event_influence_type, event_organizer
+    </sql>
+
+    <sql id="select_event_view">
+        <where>
+            <if test="eventType != null">
+                AND event_type = #{eventType,jdbcType=INTEGER}
+            </if>
+            <if test="eventArea != null">
+                AND event_area like CONCAT('%',#{eventArea,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="eventOrganizerType != null">
+                AND event_organizer_type = #{eventOrganizerType,jdbcType=INTEGER}
+            </if>
+            <if test="eventOrganizerLevel != null">
+                AND event_organizer_level = #{eventOrganizerLevel,jdbcType=INTEGER}
+            </if>
+            <if test="eventInfluenceAge != null">
+                AND event_influence_age = #{eventInfluenceAge,jdbcType=INTEGER}
+            </if>
+            <if test="eventMaxInfluence != null">
+                AND event_max_influence = #{eventMaxInfluence,jdbcType=INTEGER}
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                AND event_has_fixed_population = #{eventHasFixedPopulation,jdbcType=INTEGER}
+            </if>
+            <if test="eventHeat != null">
+                AND event_heat = #{eventHeat,jdbcType=INTEGER}
+            </if>
+            <if test="eventHistory != null">
+                AND event_history = #{eventHistory,jdbcType=INTEGER}
+            </if>
+            <if test="eventFrequencyYear != null">
+                AND event_frequency_year = #{eventFrequencyYear,jdbcType=INTEGER}
+            </if>
+            <if test="eventHash != null">
+                AND event_hash = #{eventHash,jdbcType=VARCHAR}
+            </if>
+            <if test="eventBeginDate != null">
+                AND event_begin_date &gt;= #{eventBeginDate,jdbcType=DATE}
+            </if>
+            <if test="eventFinishDate != null">
+                AND event_finish_date &lt;= #{eventFinishDate,jdbcType=DATE}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="select_event_view_geo">
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="eventName != null">
+                AND event_name = #{eventName,jdbcType=VARCHAR}
+            </if>
+            <if test="eventType != null">
+                AND event_type = #{eventType,jdbcType=INTEGER}
+            </if>
+            <if test="eventArea != null">
+                AND event_area like CONCAT('%', #{eventArea,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="eventOrganizerType != null">
+                AND event_organizer_type = #{eventOrganizerType,jdbcType=INTEGER}
+            </if>
+            <if test="eventOrganizerLevel != null">
+                AND event_organizer_level = #{eventOrganizerLevel,jdbcType=INTEGER}
+            </if>
+            <if test="eventBeginDate != null">
+                AND event_begin_date &gt;= #{eventBeginDate,jdbcType=DATE}
+            </if>
+            <if test="eventFinishDate != null">
+                AND event_finish_date &lt;= #{eventFinishDate,jdbcType=DATE}
+            </if>
+            <if test="eventInfluenceAge != null">
+                AND event_influence_age = #{eventInfluenceAge,jdbcType=INTEGER}
+            </if>
+            <if test="eventMaxInfluence != null">
+                AND event_max_influence = #{eventMaxInfluence,jdbcType=INTEGER}
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                AND event_has_fixed_population = #{eventHasFixedPopulation,jdbcType=INTEGER}
+            </if>
+            <if test="eventHeat != null">
+                AND event_heat = #{eventHeat,jdbcType=INTEGER}
+            </if>
+            <if test="eventHistory != null">
+                AND event_history = #{eventHistory,jdbcType=INTEGER}
+            </if>
+            <if test="eventFrequencyYear != null">
+                AND event_frequency_year = #{eventFrequencyYear,jdbcType=INTEGER}
+            </if>
+            <if test="eventHash != null">
+                AND event_hash = #{eventHash,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="select_event_calendar">
+        <where>
+            <if test="eventType != null">
+                AND event_type = #{eventType,jdbcType=INTEGER}
+            </if>
+            <if test="eventArea != null">
+                AND event_area = #{eventArea,jdbcType=VARCHAR}
+            </if>
+            <if test="eventOrganizerType != null">
+                AND event_organizer_type = #{eventOrganizerType,jdbcType=INTEGER}
+            </if>
+            <if test="eventOrganizerLevel != null">
+                AND event_organizer_level = #{eventOrganizerLevel,jdbcType=INTEGER}
+            </if>
+            <if test="eventInfluenceAge != null">
+                AND event_influence_age = #{eventInfluenceAge,jdbcType=INTEGER}
+            </if>
+            <if test="eventMaxInfluence != null">
+                AND event_max_influence = #{eventMaxInfluence,jdbcType=INTEGER}
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                AND event_has_fixed_population = #{eventHasFixedPopulation,jdbcType=INTEGER}
+            </if>
+            <if test="eventHeat != null">
+                AND event_heat = #{eventHeat,jdbcType=INTEGER}
+            </if>
+            <if test="eventHistory != null">
+                AND event_history = #{eventHistory,jdbcType=INTEGER}
+            </if>
+            <if test="eventFrequencyYear != null">
+                AND event_frequency_year = #{eventFrequencyYear,jdbcType=INTEGER}
+            </if>
+            <if test="eventHash != null">
+                AND event_hash = #{eventHash,jdbcType=VARCHAR}
+            </if>
+            <if test="eventBeginDate != null">
+                AND event_begin_date &gt;= #{eventBeginDate,jdbcType=DATE}
+            </if>
+            <if test="eventFinishDate != null">
+                AND event_finish_date &lt;= #{eventFinishDate,jdbcType=DATE}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectEventTotalForGeo" parameterType="edu.cap.model.po.EventView"
+            resultMap="GeoChartVOResultMap">
+        SELECT event_area,count(*) AS total
+        FROM EventView
+        <include refid="select_event_view_geo"/>
+        GROUP BY event_area
+    </select>
+
+    <select id="selectMinDateOfEvent" parameterType="edu.cap.model.po.EventView" resultType="java.util.Date">
+        SELECT
+        MIN(event_begin_date)
+        FROM EventView
+        <include refid="select_event_view"/>
+    </select>
+
+    <select id="selectMaxDateOfEvent" parameterType="edu.cap.model.po.EventView" resultType="java.util.Date">
+        SELECT
+        MAX(event_finish_date)
+        FROM EventView
+        <include refid="select_event_view"/>
+    </select>
+
+    <select id="selectEventTotalForCalendar" parameterType="Map"
+            resultMap="CalendarChartVOResultMap">
+        <foreach collection="dateList" item="item" index="index" separator="union">
+            SELECT
+            #{item,jdbcType=DATE} AS event_date, COUNT(*) AS total
+            FROM EventView
+            <include refid="select_event_calendar"/>
+        </foreach>
+    </select>
+
+    <select id="selectEventForExport" parameterType="edu.cap.model.po.EventView" resultMap="EventViewResultMap">
+        SELECT
+        <include refid="EventView_Column_List"/>
+        FROM EventView
+        <include refid="select_event_view"/>
+        ORDER BY event_begin_date
+    </select>
+
+    <select id="selectEventTotalByDTOForCalendar"
+            parameterType="edu.cap.model.dto.QueryDTO"
+            resultMap="CalendarChartVOResultMap">
+        SELECT
+        event_begin_date AS event_date,
+        COUNT(*) AS total
+        FROM EventView
+        <include refid="select_event_calendar"/>
+        GROUP BY event_begin_date
+    </select>
+
+</mapper>

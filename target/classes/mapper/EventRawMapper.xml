@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cap.dao.EventRawMapper">
+    <resultMap id="BaseResultMap" type="edu.cap.model.po.EventRaw">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="event_hash" jdbcType="VARCHAR" property="eventHash"/>
+        <result column="event_name" jdbcType="VARCHAR" property="eventName"/>
+        <result column="event_area" jdbcType="VARCHAR" property="eventArea"/>
+        <result column="event_type" jdbcType="VARCHAR" property="eventType"/>
+        <result column="event_begin_date" jdbcType="DATE" property="eventBeginDate"/>
+        <result column="event_finish_date" jdbcType="DATE" property="eventFinishDate"/>
+        <result column="event_heat" jdbcType="VARCHAR" property="eventHeat"/>
+        <result column="event_history" jdbcType="VARCHAR" property="eventHistory"/>
+        <result column="event_content" jdbcType="VARCHAR" property="eventContent"/>
+        <result column="event_src_url" jdbcType="VARCHAR" property="eventSrcUrl"/>
+        <result column="event_frequency_year" jdbcType="VARCHAR" property="eventFrequencyYear"/>
+        <result column="event_organizer" jdbcType="VARCHAR" property="eventOrganizer"/>
+        <result column="event_create_date" jdbcType="TIMESTAMP" property="eventCreateDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, event_hash, event_name, event_area, event_type, event_begin_date, event_finish_date,
+        event_heat, event_history, event_content, event_src_url, event_frequency_year, event_organizer,
+        event_create_date
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select 'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from EventRaw
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM EventRaw
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="edu.cap.model.po.EventRaw">
+        INSERT INTO EventRaw (id, event_hash, event_name,
+                              event_area, event_type, event_begin_date,
+                              event_finish_date, event_heat, event_history,
+                              event_content, event_src_url, event_frequency_year,
+                              event_organizer, event_create_date)
+        VALUES (#{id,jdbcType=INTEGER}, #{eventHash,jdbcType=VARCHAR}, #{eventName,jdbcType=VARCHAR},
+                                        #{eventArea,jdbcType=VARCHAR}, #{eventType,jdbcType=VARCHAR},
+                                        #{eventBeginDate,jdbcType=DATE},
+                                        #{eventFinishDate,jdbcType=DATE}, #{eventHeat,jdbcType=VARCHAR},
+                                        #{eventHistory,jdbcType=VARCHAR},
+                                        #{eventContent,jdbcType=VARCHAR}, #{eventSrcUrl,jdbcType=VARCHAR},
+                #{eventFrequencyYear,jdbcType=VARCHAR},
+                #{eventOrganizer,jdbcType=VARCHAR}, #{eventCreateDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="edu.cap.model.po.EventRaw">
+        insert into EventRaw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="eventHash != null">
+                event_hash,
+            </if>
+            <if test="eventName != null">
+                event_name,
+            </if>
+            <if test="eventArea != null">
+                event_area,
+            </if>
+            <if test="eventType != null">
+                event_type,
+            </if>
+            <if test="eventBeginDate != null">
+                event_begin_date,
+            </if>
+            <if test="eventFinishDate != null">
+                event_finish_date,
+            </if>
+            <if test="eventHeat != null">
+                event_heat,
+            </if>
+            <if test="eventHistory != null">
+                event_history,
+            </if>
+            <if test="eventContent != null">
+                event_content,
+            </if>
+            <if test="eventSrcUrl != null">
+                event_src_url,
+            </if>
+            <if test="eventFrequencyYear != null">
+                event_frequency_year,
+            </if>
+            <if test="eventOrganizer != null">
+                event_organizer,
+            </if>
+            <if test="eventCreateDate != null">
+                event_create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="eventHash != null">
+                #{eventHash,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null">
+                #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventArea != null">
+                #{eventArea,jdbcType=VARCHAR},
+            </if>
+            <if test="eventType != null">
+                #{eventType,jdbcType=VARCHAR},
+            </if>
+            <if test="eventBeginDate != null">
+                #{eventBeginDate,jdbcType=DATE},
+            </if>
+            <if test="eventFinishDate != null">
+                #{eventFinishDate,jdbcType=DATE},
+            </if>
+            <if test="eventHeat != null">
+                #{eventHeat,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHistory != null">
+                #{eventHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="eventContent != null">
+                #{eventContent,jdbcType=VARCHAR},
+            </if>
+            <if test="eventSrcUrl != null">
+                #{eventSrcUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="eventFrequencyYear != null">
+                #{eventFrequencyYear,jdbcType=VARCHAR},
+            </if>
+            <if test="eventOrganizer != null">
+                #{eventOrganizer,jdbcType=VARCHAR},
+            </if>
+            <if test="eventCreateDate != null">
+                #{eventCreateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="edu.cap.model.po.EventRaw">
+        update EventRaw
+        <set>
+            <if test="eventHash != null">
+                event_hash = #{eventHash,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null">
+                event_name = #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventArea != null">
+                event_area = #{eventArea,jdbcType=VARCHAR},
+            </if>
+            <if test="eventType != null">
+                event_type = #{eventType,jdbcType=VARCHAR},
+            </if>
+            <if test="eventBeginDate != null">
+                event_begin_date = #{eventBeginDate,jdbcType=DATE},
+            </if>
+            <if test="eventFinishDate != null">
+                event_finish_date = #{eventFinishDate,jdbcType=DATE},
+            </if>
+            <if test="eventHeat != null">
+                event_heat = #{eventHeat,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHistory != null">
+                event_history = #{eventHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="eventContent != null">
+                event_content = #{eventContent,jdbcType=VARCHAR},
+            </if>
+            <if test="eventSrcUrl != null">
+                event_src_url = #{eventSrcUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="eventFrequencyYear != null">
+                event_frequency_year = #{eventFrequencyYear,jdbcType=VARCHAR},
+            </if>
+            <if test="eventOrganizer != null">
+                event_organizer = #{eventOrganizer,jdbcType=VARCHAR},
+            </if>
+            <if test="eventCreateDate != null">
+                event_create_date = #{eventCreateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.cap.model.po.EventRaw">
+        UPDATE EventRaw
+        SET event_hash           = #{eventHash,jdbcType=VARCHAR},
+            event_name           = #{eventName,jdbcType=VARCHAR},
+            event_area           = #{eventArea,jdbcType=VARCHAR},
+            event_type           = #{eventType,jdbcType=VARCHAR},
+            event_begin_date     = #{eventBeginDate,jdbcType=DATE},
+            event_finish_date    = #{eventFinishDate,jdbcType=DATE},
+            event_heat           = #{eventHeat,jdbcType=VARCHAR},
+            event_history        = #{eventHistory,jdbcType=VARCHAR},
+            event_content        = #{eventContent,jdbcType=VARCHAR},
+            event_src_url        = #{eventSrcUrl,jdbcType=VARCHAR},
+            event_frequency_year = #{eventFrequencyYear,jdbcType=VARCHAR},
+            event_organizer      = #{eventOrganizer,jdbcType=VARCHAR},
+            event_create_date    = #{eventCreateDate,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

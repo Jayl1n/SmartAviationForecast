@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cap.dao.EventViewMapper">
+    <resultMap id="BaseResultMap" type="edu.cap.model.po.EventView">
+        <id column="event_hash" jdbcType="VARCHAR" property="eventHash"/>
+        <result column="event_name" jdbcType="VARCHAR" property="eventName"/>
+        <result column="event_area" jdbcType="VARCHAR" property="eventArea"/>
+        <result column="event_type" jdbcType="INTEGER" property="eventType"/>
+        <result column="event_heat" jdbcType="INTEGER" property="eventHeat"/>
+        <result column="event_history" jdbcType="INTEGER" property="eventHistory"/>
+        <result column="event_begin_date" jdbcType="DATE" property="eventBeginDate"/>
+        <result column="event_finish_date" jdbcType="DATE" property="eventFinishDate"/>
+        <result column="event_type_raw" jdbcType="VARCHAR" property="eventTypeRaw"/>
+        <result column="event_heat_raw" jdbcType="VARCHAR" property="eventHeatRaw"/>
+        <result column="event_history_raw" jdbcType="VARCHAR" property="eventHistoryRaw"/>
+        <result column="event_frequency_year" jdbcType="INTEGER" property="eventFrequencyYear"/>
+        <result column="event_frequency_year_raw" jdbcType="VARCHAR" property="eventFrequencyYearRaw"/>
+        <result column="event_organizer_type" jdbcType="INTEGER" property="eventOrganizerType"/>
+        <result column="event_organizer_level" jdbcType="INTEGER" property="eventOrganizerLevel"/>
+        <result column="event_influence_age" jdbcType="INTEGER" property="eventInfluenceAge"/>
+        <result column="event_max_influence" jdbcType="INTEGER" property="eventMaxInfluence"/>
+        <result column="event_has_fixed_population" jdbcType="INTEGER" property="eventHasFixedPopulation"/>
+        <result column="event_influence_type" jdbcType="INTEGER" property="eventInfluenceType"/>
+        <result column="event_organizer" jdbcType="VARCHAR" property="eventOrganizer"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        event_hash, event_name, event_area, event_type, event_heat, event_history, event_begin_date,
+        event_finish_date, event_type_raw, event_heat_raw, event_history_raw, event_frequency_year,
+        event_frequency_year_raw, event_organizer_type, event_organizer_level, event_influence_age,
+        event_max_influence, event_has_fixed_population, event_influence_type, event_organizer
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select 'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from EventView
+        where event_hash = #{eventHash,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM EventView
+        WHERE event_hash = #{eventHash,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="edu.cap.model.po.EventView">
+        INSERT INTO EventView (event_hash, event_name, event_area,
+                               event_type, event_heat, event_history,
+                               event_begin_date, event_finish_date, event_type_raw,
+                               event_heat_raw, event_history_raw, event_frequency_year,
+                               event_frequency_year_raw, event_organizer_type,
+                               event_organizer_level, event_influence_age,
+                               event_max_influence, event_has_fixed_population,
+                               event_influence_type, event_organizer)
+        VALUES (#{eventHash,jdbcType=VARCHAR}, #{eventName,jdbcType=VARCHAR}, #{eventArea,jdbcType=VARCHAR},
+                                               #{eventType,jdbcType=INTEGER}, #{eventHeat,jdbcType=INTEGER},
+                                               #{eventHistory,jdbcType=INTEGER},
+                                               #{eventBeginDate,jdbcType=DATE}, #{eventFinishDate,jdbcType=DATE},
+                                               #{eventTypeRaw,jdbcType=VARCHAR},
+                                               #{eventHeatRaw,jdbcType=VARCHAR}, #{eventHistoryRaw,jdbcType=VARCHAR},
+                #{eventFrequencyYear,jdbcType=INTEGER},
+                #{eventFrequencyYearRaw,jdbcType=VARCHAR}, #{eventOrganizerType,jdbcType=INTEGER},
+                #{eventOrganizerLevel,jdbcType=INTEGER}, #{eventInfluenceAge,jdbcType=INTEGER},
+                #{eventMaxInfluence,jdbcType=INTEGER}, #{eventHasFixedPopulation,jdbcType=INTEGER},
+                #{eventInfluenceType,jdbcType=INTEGER}, #{eventOrganizer,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="edu.cap.model.po.EventView">
+        insert into EventView
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eventHash != null">
+                event_hash,
+            </if>
+            <if test="eventName != null">
+                event_name,
+            </if>
+            <if test="eventArea != null">
+                event_area,
+            </if>
+            <if test="eventType != null">
+                event_type,
+            </if>
+            <if test="eventHeat != null">
+                event_heat,
+            </if>
+            <if test="eventHistory != null">
+                event_history,
+            </if>
+            <if test="eventBeginDate != null">
+                event_begin_date,
+            </if>
+            <if test="eventFinishDate != null">
+                event_finish_date,
+            </if>
+            <if test="eventTypeRaw != null">
+                event_type_raw,
+            </if>
+            <if test="eventHeatRaw != null">
+                event_heat_raw,
+            </if>
+            <if test="eventHistoryRaw != null">
+                event_history_raw,
+            </if>
+            <if test="eventFrequencyYear != null">
+                event_frequency_year,
+            </if>
+            <if test="eventFrequencyYearRaw != null">
+                event_frequency_year_raw,
+            </if>
+            <if test="eventOrganizerType != null">
+                event_organizer_type,
+            </if>
+            <if test="eventOrganizerLevel != null">
+                event_organizer_level,
+            </if>
+            <if test="eventInfluenceAge != null">
+                event_influence_age,
+            </if>
+            <if test="eventMaxInfluence != null">
+                event_max_influence,
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                event_has_fixed_population,
+            </if>
+            <if test="eventInfluenceType != null">
+                event_influence_type,
+            </if>
+            <if test="eventOrganizer != null">
+                event_organizer,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eventHash != null">
+                #{eventHash,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null">
+                #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventArea != null">
+                #{eventArea,jdbcType=VARCHAR},
+            </if>
+            <if test="eventType != null">
+                #{eventType,jdbcType=INTEGER},
+            </if>
+            <if test="eventHeat != null">
+                #{eventHeat,jdbcType=INTEGER},
+            </if>
+            <if test="eventHistory != null">
+                #{eventHistory,jdbcType=INTEGER},
+            </if>
+            <if test="eventBeginDate != null">
+                #{eventBeginDate,jdbcType=DATE},
+            </if>
+            <if test="eventFinishDate != null">
+                #{eventFinishDate,jdbcType=DATE},
+            </if>
+            <if test="eventTypeRaw != null">
+                #{eventTypeRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHeatRaw != null">
+                #{eventHeatRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHistoryRaw != null">
+                #{eventHistoryRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventFrequencyYear != null">
+                #{eventFrequencyYear,jdbcType=INTEGER},
+            </if>
+            <if test="eventFrequencyYearRaw != null">
+                #{eventFrequencyYearRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventOrganizerType != null">
+                #{eventOrganizerType,jdbcType=INTEGER},
+            </if>
+            <if test="eventOrganizerLevel != null">
+                #{eventOrganizerLevel,jdbcType=INTEGER},
+            </if>
+            <if test="eventInfluenceAge != null">
+                #{eventInfluenceAge,jdbcType=INTEGER},
+            </if>
+            <if test="eventMaxInfluence != null">
+                #{eventMaxInfluence,jdbcType=INTEGER},
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                #{eventHasFixedPopulation,jdbcType=INTEGER},
+            </if>
+            <if test="eventInfluenceType != null">
+                #{eventInfluenceType,jdbcType=INTEGER},
+            </if>
+            <if test="eventOrganizer != null">
+                #{eventOrganizer,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <resultMap id="countMap" type="edu.cap.model.po.EventCount">
+        <result column="event_type" jdbcType="INTEGER" property="type"/>
+        <result column="v" jdbcType="INTEGER" property="value"/>
+    </resultMap>
+    <select id="countEventTypeGroup" resultMap="countMap">
+        SELECT
+            event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 1
+        UNION
+        SELECT
+            event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 2
+        UNION
+        SELECT
+            event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 3
+        UNION
+        SELECT
+            event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 4
+        UNION
+        SELECT
+            5                    event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 5
+        UNION
+        SELECT
+            event_type,
+            count(event_type) AS 'v'
+        FROM EventView
+        WHERE event_type = 6
+    </select>
+
+    <resultMap id="overallMeritMap" type="edu.cap.model.po.OverallMerit">
+        <result column="avg_organizer_level" jdbcType="REAL" property="avgOrganizerLevel"/>
+        <result column="avg_max_influence" jdbcType="REAL" property="avgMaxInfluence"/>
+        <result column="avg_heat" jdbcType="REAL" property="avgHeat"/>
+        <result column="avg_history" jdbcType="REAL" property="avgHistory"/>
+        <result column="avg_frequency_year" jdbcType="REAL" property="avgFrequencyYear"/>
+    </resultMap>
+
+    <select id="overallMerit" resultMap="overallMeritMap">
+        SELECT
+            AVG(event_organizer_level) avg_organizer_level,
+            AVG(event_max_influence)   avg_max_influence,
+            AVG(event_heat)            avg_heat,
+            AVG(event_history)         avg_history,
+            AVG(event_frequency_year)  avg_frequency_year
+        FROM EventView
+        WHERE event_area LIKE CONCAT('%', #{city,jdbcType=VARCHAR}, '%')
+              AND event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+    </select>
+
+
+    <select id="selectByDateAndType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM EventView
+        <where>
+            <if test="startDate !=null">
+                AND event_begin_date &gt;= #{startDate,jdbcType=DATE}
+            </if>
+            <if test="endDate != null ">
+                AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+            </if>
+            <if test="type != null ">
+                AND event_type = #{type,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY event_area DESC
+    </select>
+
+    <resultMap id="countHotCity" type="edu.cap.model.po.HotCity">
+        <result column="event_area" jdbcType="VARCHAR" property="city"/>
+        <result column="count" jdbcType="REAL" property="value"/>
+    </resultMap>
+
+    <resultMap id="countWithCityMap" type="edu.cap.model.po.EventCount">
+        <result column="event_type" jdbcType="INTEGER" property="type"/>
+        <result column="v" jdbcType="INTEGER" property="value"/>
+        <result column="event_area" jdbcType="VARCHAR" property="city"/>
+    </resultMap>
+
+    <select id="selectCountByAreaAndDate" resultMap="countWithCityMap">
+        SELECT
+            event_area,
+            event_type,
+            count(*) v
+        FROM EventView
+        WHERE event_area LIKE CONCAT('%', #{city,jdbcType=VARCHAR}, '%')
+              AND event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+        GROUP BY event_type
+    </select>
+
+    <select id="countEventAreaGroupByDate" resultMap="countHotCity">
+        SELECT
+            event_area,
+            count(*) count
+        FROM EventView
+        WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+        GROUP BY event_area
+        ORDER BY count DESC
+        LIMIT #{num,jdbcType=INTEGER}
+    </select>
+
+    <resultMap id="countAllMap" type="edu.cap.model.vo.EventCountVO">
+        <result jdbcType="VARCHAR" column="type" property="type"/>
+        <result jdbcType="INTEGER" column="v" property="value"/>
+    </resultMap>
+    <select id="countCurrentMonth" resultMap="countAllMap">
+        SELECT
+            '全国当月事件总数' type,
+            count(*)   v
+        FROM EventView
+        WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+    </select>
+
+    <resultMap id="cityCountMap" type="edu.cap.model.po.CityCount">
+        <result jdbcType="VARCHAR" column="event_area" property="city"/>
+        <result jdbcType="INTEGER" column="count" property="count"/>
+    </resultMap>
+
+    <select id="selectChinaMap" resultMap="cityCountMap">
+        SELECT
+            event_area,
+            count(*) count
+        FROM EventView
+        WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+        GROUP BY event_area
+        ORDER BY count DESC
+    </select>
+
+    <select id="selectRankByCityAndMonth" resultType="java.lang.Integer">
+        SELECT count(*) + 1
+        FROM (
+                 SELECT
+                     event_area,
+                     count(*) c
+                 FROM EventView
+                 WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+                       AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+                 GROUP BY event_area) AS a
+        WHERE a.c >
+              (
+                  SELECT COUNT(*)
+                  FROM EventView
+                  WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+                        AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+                        AND event_area LIKE CONCAT('%', #{city,jdbcType=VARCHAR}, '%')
+              )
+    </select>
+
+    <select id="selectSingleCountByAreaAndDate" resultMap="cityCountMap">
+        SELECT
+            event_area city,
+            count(*)   count
+        FROM EventView
+        WHERE event_begin_date &gt;= #{startDate,jdbcType=DATE}
+              AND event_begin_date &lt;= #{endDate,jdbcType=DATE}
+              AND event_area LIKE CONCAT('%', #{city,jdbcType=VARCHAR}, '%')
+    </select>
+
+    <select id="selectEventForExport" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM EventView
+        <where>
+            <if test="startDate != null">
+                AND event_begin_date &gt;= #{startDate,jdbcType=DATE}
+            </if>
+            <if test="endDate != null">
+                AND event_finish_date &lt;= #{endDate,jdbcType=DATE}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="edu.cap.model.po.EventView">
+        update EventView
+        <set>
+            <if test="eventName != null">
+                event_name = #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="eventArea != null">
+                event_area = #{eventArea,jdbcType=VARCHAR},
+            </if>
+            <if test="eventType != null">
+                event_type = #{eventType,jdbcType=INTEGER},
+            </if>
+            <if test="eventHeat != null">
+                event_heat = #{eventHeat,jdbcType=INTEGER},
+            </if>
+            <if test="eventHistory != null">
+                event_history = #{eventHistory,jdbcType=INTEGER},
+            </if>
+            <if test="eventBeginDate != null">
+                event_begin_date = #{eventBeginDate,jdbcType=DATE},
+            </if>
+            <if test="eventFinishDate != null">
+                event_finish_date = #{eventFinishDate,jdbcType=DATE},
+            </if>
+            <if test="eventTypeRaw != null">
+                event_type_raw = #{eventTypeRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHeatRaw != null">
+                event_heat_raw = #{eventHeatRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventHistoryRaw != null">
+                event_history_raw = #{eventHistoryRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventFrequencyYear != null">
+                event_frequency_year = #{eventFrequencyYear,jdbcType=INTEGER},
+            </if>
+            <if test="eventFrequencyYearRaw != null">
+                event_frequency_year_raw = #{eventFrequencyYearRaw,jdbcType=VARCHAR},
+            </if>
+            <if test="eventOrganizerType != null">
+                event_organizer_type = #{eventOrganizerType,jdbcType=INTEGER},
+            </if>
+            <if test="eventOrganizerLevel != null">
+                event_organizer_level = #{eventOrganizerLevel,jdbcType=INTEGER},
+            </if>
+            <if test="eventInfluenceAge != null">
+                event_influence_age = #{eventInfluenceAge,jdbcType=INTEGER},
+            </if>
+            <if test="eventMaxInfluence != null">
+                event_max_influence = #{eventMaxInfluence,jdbcType=INTEGER},
+            </if>
+            <if test="eventHasFixedPopulation != null">
+                event_has_fixed_population = #{eventHasFixedPopulation,jdbcType=INTEGER},
+            </if>
+            <if test="eventInfluenceType != null">
+                event_influence_type = #{eventInfluenceType,jdbcType=INTEGER},
+            </if>
+            <if test="eventOrganizer != null">
+                event_organizer = #{eventOrganizer,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where event_hash = #{eventHash,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="edu.cap.model.po.EventView">
+        UPDATE EventView
+        SET event_name                 = #{eventName,jdbcType=VARCHAR},
+            event_area                 = #{eventArea,jdbcType=VARCHAR},
+            event_type                 = #{eventType,jdbcType=INTEGER},
+            event_heat                 = #{eventHeat,jdbcType=INTEGER},
+            event_history              = #{eventHistory,jdbcType=INTEGER},
+            event_begin_date           = #{eventBeginDate,jdbcType=DATE},
+            event_finish_date          = #{eventFinishDate,jdbcType=DATE},
+            event_type_raw             = #{eventTypeRaw,jdbcType=VARCHAR},
+            event_heat_raw             = #{eventHeatRaw,jdbcType=VARCHAR},
+            event_history_raw          = #{eventHistoryRaw,jdbcType=VARCHAR},
+            event_frequency_year       = #{eventFrequencyYear,jdbcType=INTEGER},
+            event_frequency_year_raw   = #{eventFrequencyYearRaw,jdbcType=VARCHAR},
+            event_organizer_type       = #{eventOrganizerType,jdbcType=INTEGER},
+            event_organizer_level      = #{eventOrganizerLevel,jdbcType=INTEGER},
+            event_influence_age        = #{eventInfluenceAge,jdbcType=INTEGER},
+            event_max_influence        = #{eventMaxInfluence,jdbcType=INTEGER},
+            event_has_fixed_population = #{eventHasFixedPopulation,jdbcType=INTEGER},
+            event_influence_type       = #{eventInfluenceType,jdbcType=INTEGER},
+            event_organizer            = #{eventOrganizer,jdbcType=VARCHAR}
+        WHERE event_hash = #{eventHash,jdbcType=VARCHAR}
+    </update>
+</mapper>

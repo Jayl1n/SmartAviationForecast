@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>智能航空预报系统 - 你的画像</title>
+    <link href="css/v.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        /*background: #fff;*/
+        background: url("img/background.png") 0% 0% / 100% 100%;
+        width: 1920px;
+        height: 1080px;
+        transform: scale(0.992708, 0.968518);
+        transform-origin: left top 0;
+        background-repeat: repeat;
+
+    }
+</style>
+<style>
+    .clearfix:after {
+        clear: both;
+        content: ' ';
+        display: block;
+        font-size: 0;
+        line-height: 0;
+        visibility: hidden;
+        width: 0;
+        height: 0
+    }
+
+    ul.clearfix li {
+        float: left
+    }
+
+    .clearfix {
+        *zoom: 1
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        vertical-align: baseline
+    }
+
+    * {
+        box-sizing: border-box;
+        -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -icab-box-sizing: border-box;
+        -khtml-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box
+    }
+
+    @media screen and (max-device-width: 720px) {
+        body {
+            -webkit-text-size-adjust: none
+        }
+    }
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block
+    }
+
+    html {
+        overflow-y: scroll;
+        overflow-x: hidden
+    }
+
+    select {
+        border: 1px solid #dee1e3;
+        font-size: 12px;
+        color: #fff;
+        line-height: 12px
+    }
+
+    ul {
+        list-style: none
+    }
+
+    ol {
+        list-style: decimal inside
+    }
+
+    blockquote, q {
+        quotes: none
+    }
+
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: '';
+        content: none
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    a {
+        text-decoration: none;
+        cursor: pointer
+    }
+
+    a:hover {
+        text-decoration: none
+    }
+
+    a:focus {
+        outline: 0
+    }
+
+    span {
+        color: inherit
+    }
+
+    a img {
+        vertical-align: middle
+    }
+
+    label[for] {
+        cursor: pointer
+    }
+
+    body, html {
+        height: 100%;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    #datavLoading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0f2a42;
+    }
+
+    #datavLoading img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -60px 0 0 -60px;
+        width: 120px;
+    }
+
+    #datavLoading img.text-logo {
+        margin-top: 60px;
+        margin-left: -50px;
+        width: 100px;
+    }
+
+    .datavLayout {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+    }
+
+    .datavLayout .-datav-com {
+        position: absolute !important;
+        margin: 0 !important;
+    }
+
+    #datavTextLogo {
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        width: 50px;
+        z-index: 99999999;
+    }
+
+    li {
+        list-style: none
+    }
+
+    .maquee {
+        width: 98%;
+        overflow: hidden;
+        margin: 0 auto;
+        color: #7C7C7C
+    }
+
+    .maquee {
+        height: 520px;
+    }
+
+    .topRec_List ul {
+        width: 100%;
+        height: 100%;
+    }
+
+    .topRec_List li {
+        width: 100%;
+        height: 38px;
+        line-height: 38px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .topRec_List li div {
+        float: left;
+    }
+
+    .topRec_List li div:nth-child(1) {
+        width: 40%;
+    }
+
+    .topRec_List li div:nth-child(2) {
+        width: 30%;
+    }
+
+    .topRec_List li div:nth-child(3) {
+        width: 30%;
+    }
+
+    #list_tab li {
+        text-overflow: ellipsis;
+    }
+
+</style>
+
+<body>
+
+<div class="datalayout">
+    <div id="header">
+        <div id="title">
+            智能航空预报系统
+        </div>
+    </div>
+
+    <div id="timer">
+        <div id="timer-text">
+            <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 style="width: 18px; height: 18px; margin-right: 5px;">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-920.000000, -643.000000)" fill="#5DF5F4" class="icon-path"
+                       style="fill: rgb(86, 166, 252);">
+                        <path d="M929,661 C924.028906,661 920,656.971094 920,652 C920,647.028906 924.028906,643 929,643 C933.971094,643 938,647.028906 938,652 C938,656.971094 933.971094,661 929,661 L929,661 Z M934.468555,646.531445 C933.758398,645.821289 932.930469,645.262305 932.009375,644.873828 C931.056641,644.469531 930.044141,644.265625 929,644.265625 C927.955859,644.265625 926.943359,644.469531 925.990625,644.87207 C925.069531,645.262305 924.243359,645.819531 923.531445,646.529688 C922.821289,647.239844 922.262305,648.067773 921.873828,648.988867 C921.469531,649.943359 921.265625,650.955859 921.265625,652 C921.265625,653.044141 921.469531,654.056641 921.87207,655.009375 C922.262305,655.930469 922.819531,656.756641 923.529688,657.468555 C924.239844,658.178711 925.067773,658.737695 925.988867,659.126172 C926.943359,659.530469 927.955859,659.734375 929,659.734375 C930.044141,659.734375 931.056641,659.530469 932.009375,659.12793 C932.930469,658.737695 933.756641,658.180469 934.468555,657.470312 C935.178711,656.760156 935.737695,655.932227 936.126172,655.011133 C936.530469,654.056641 936.734375,653.044141 936.734375,652 C936.734375,650.955859 936.530469,649.943359 936.12793,648.990625 C935.737695,648.069531 935.180469,647.241602 934.468555,646.531445 L934.468555,646.531445 Z M932.884766,652.140625 L929.632812,652.140625 L929.632812,656.359375 C929.632812,656.70918 929.349805,656.992188 929,656.992188 L929,656.992188 C928.650195,656.992188 928.367188,656.70918 928.367188,656.359375 L928.367188,652.140625 L928.367188,652.140625 C928.367188,651.441016 928.933203,650.875 929.632812,650.875 L929.632812,650.875 L932.884766,650.875 C933.23457,650.875 933.517578,651.158008 933.517578,651.507812 L933.517578,651.507812 C933.517578,651.857617 933.23457,652.140625 932.884766,652.140625 L932.884766,652.140625 Z"
+                              transform="translate(929.000000, 652.000000) scale(1, -1) translate(-929.000000, -652.000000)"/>
+                    </g>
+                </g>
+            </svg>
+            <span id="datetime-text">2017-08-25 20:00:13</span>
+        </div>
+
+    </div>
+
+    <div id="decoration" style="left: 620px; top: 70px; width: 720px; height: 70px; z-index: 9;">
+        <div style="width: 720px; height: 70px;">
+            <div style="width: 100%; height: 100%; background-image: url('img/decoration.gif'); background-size: 100% auto; background-repeat: no-repeat; background-position: center center;"></div>
+        </div>
+    </div>
+
+    <div id="img_line" style="left: 40px; top: 98px; width: 1850px; height: 16px; z-index: 2;">
+        <div style="width: 1850px; height: 16px; background-image: url('img/img_line.png'); background-repeat:no-repeat; background-size: 100% 100%;"></div>
+    </div>
+
+    <div style=" height: 270px; left: 30px; top: 170px; width: 270px; z-index: 1;    margin: 0; position: absolute;">
+        <div style="background: rgba(0, 123, 255, 0.1) none repeat scroll 0 0; border: medium none; border-radius: 0; height: 270px; width: 270px;"></div>
+    </div>
+
+    <!--<div style="left: 30px; top: 170px; width: 190px; height: 60px; z-index: 13; margin: 0;position: absolute;">-->
+    <!--<div style="width: 190px; height: 60px; display: flex; align-items: center; justify-content: center; color: rgb(255, 255, 255); font-weight: bolder; font-family: Microsoft Yahei,Arial,sans-serif; font-size: 24px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">-->
+    <!--事件类型占比-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div style="left: 30px; top: 170px; width: 270px; height: 270px; z-index: 6;">
+        <div id="event_count_pie"
+             style="z-index: 7; left:30px;top:170px;width: 270px; height: 270px; padding: 10px 0px;margin: 0;position: absolute"></div>
+    </div>
+
+    <div style="left: 320px; top: 170px; width: 270px; height: 270px; z-index: 15; margin: 0; position: absolute;">
+        <div style="width: 270px; height: 270px; border: medium none; background: rgba(0, 123, 255, 0.1) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <!--<div style="left: 320px; top: 170px; width: 150px; height: 60px; z-index: 20;margin: 0;position: absolute;">-->
+    <!--<div style="width: 150px; height: 60px; display: flex; align-items: center; justify-content: center; color: rgb(255, 255, 255); font-weight: bolder; font-family: Microsoft Yahei,Arial,sans-serif; font-size: 24px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">-->
+    <!--事件总数-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div style="left: 320px; top: 170px; width: 270px; height: 270px; z-index: 19; margin: 0;position: absolute;">
+        <div id="event_count_bar" style="width: 270px; height: 270px;margin:0;position: absolute;"></div>
+    </div>
+
+    <div style="left: 30px; top: 460px; width: 560px; height: 350px; z-index: 10; margin: 0;position: absolute;">
+        <div style="width: 560px; height: 350px; border: medium none; background: rgba(0, 123, 255, 0.1) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <div style="left: 30px; top: 470px; width: 560px; height: 350px; z-index: 12;margin: 0;position: absolute;">
+        <div id="top_five_bar"
+             style="width: 560px; height: 350px; display: flex; align-items: center; justify-content: center; color: rgb(255, 255, 255); font-weight: bolder; font-family: Microsoft Yahei; font-size: 24px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+        </div>
+    </div>
+
+    <div style="left: 30px; top: 830px; width: 560px; height: 230px; z-index: 16; margin:0;position: absolute; ">
+        <div style="width: 560px; height: 250px; border: medium none; background: rgba(0, 123, 255, 0.1) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <div style="left: 40px; top: 830px; width: 550px; height: 50px; z-index: 18; margin: 0;position: absolute;">
+        <div id="summary_total"
+             style="width: 120px; height: 50px; display: flex; align-items: center; justify-content: center; color: rgb(255, 255, 255); font-weight: bolder; font-family: Microsoft Yahei; font-size: 24px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            综合评价
+        </div>
+        <div id="summary" style="color:#ffffff ;">
+
+        </div>
+    </div>
+
+    <div style="left: 610px; top: 170px; width: 870px; height: 640px; z-index: 0; margin: 0;position: absolute;">
+        <div style="width: 870px; height: 640px; border: medium none; background: rgba(0, 123, 255, 0.12) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <div style="left: 610px; top: 830px; width: 870px; height: 230px; z-index: 4;margin: 0;position: absolute;">
+        <div style="width: 870px; height: 230px; border: medium none; background: rgba(0, 123, 255, 0.1) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <div style="left: 610px; top: 830px; width:900px; height:260px; z-index: 23; margin: 0;position: absolute;">
+        <div id="top_ten_bar"
+             style="width: 900px; height: 260px; display: flex; align-items: center; justify-content: center; color: rgb(255, 255, 255); font-weight: bolder; font-family: Microsoft Yahei,Arial,sans-serif; font-size: 24px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+        </div>
+    </div>
+
+    <div style="left: 1500px; top: 170px; width: 390px; height: 300px; z-index: 24;margin: 0;position: absolute;">
+        <div style="width: 390px; height: 300px; border: medium none; background: rgba(0, 123, 255, 0.1) none repeat scroll 0% 0%; border-radius: 0px;"></div>
+    </div>
+
+    <div style="left: 1500px; top: 170px; width: 390px; height: 300px; z-index: 25;margin: 0;position: absolute;">
+        <div id="radar_chart" style="width: 390px; height: 300px; padding: 10px 0px;"></div>
+    </div>
+
+
+    <div style="left: 1500px; top: 470px; width: 390px; height: 600px; z-index: 21;margin-top: 26px;position: absolute;">
+        <div id="event_list"
+             style="width: 390px; height: 520px; overflow: hidden; background-color: transparent; cursor: pointer;">
+            <div class="line header"
+                 style="display: flex;align-items: center;background-color: rgba(27,44,94,0.45);height: 41px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;vertical-align: middle;color: #ffffff;">
+                <div class="column column-title"
+                     style="width: 40%;display:inline-block;text-overflow: ellipsis;text-align: center;white-space: nowrap;overflow: hidden;vertical-align: middle;background-color: transparent;font-family: Microsoft Yahei;font-size: 16px;color: #ffffff;font-weight: bolder;">
+                    事件名
+                </div>
+                <div class="column column-title"
+                     style="width: 30%;display:inline-block;text-overflow: ellipsis;text-align: center;white-space: nowrap;overflow: hidden;vertical-align: middle;background-color: transparent;font-family: Microsoft Yahei;font-size: 16px;color: #ffffff;font-weight: bolder;">
+                    城市
+                </div>
+                <div class="column column-title"
+                     style="width: 30%;display:inline-block;text-overflow: ellipsis;text-align: center;white-space: nowrap;overflow: hidden;vertical-align: middle;background-color: transparent;font-family: Microsoft Yahei;font-size: 16px;color: #ffffff;font-weight: bolder;">
+                    相对热度
+                </div>
+            </div>
+
+            <div class="topRec_List" style="background-color: rgba(62,131,172,0.3);">
+                <div class="maquee">
+                    <ul id="list_tab" style="color: #ffffff;font-size: 12px;overflow: auto">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div style="display: inline-block;"><a class="btn btn-block"
+                                                   onclick="window.open(baseUrl+'/download/'+timeLineIndex)"
+                                                   target="_blank" style="width: 190px;">下载当月事件</a></div>
+            <div style="display: inline-block;"><a class="btn btn-block" onclick="window.open(baseUrl+'/download/13')"
+                                                   style="width: 190px;">下载全部数据</a></div>
+        </div>
+    </div>
+
+    <div id="china-map"
+         style="left: 610px; top: 170px; width: 870px; height: 640px; z-index: 3;margin: 0;position: absolute;">
+    </div>
+</div>
+
+
+<script src="js/echarts.js"></script>
+<script src="js/china.js"></script>
+<script src="js/walden.js"></script>
+<script src="js/jquery-3.2.1.js"></script>
+
+<script>
+
+    //baseUrl
+    var baseUrl = window.location.href;
+
+    var place = "";
+
+    //地图
+    var mapChart = echarts.init(document.getElementById('china-map'), 'walden');
+
+    //时间过滤器
+    var timeLineIndex = 1;
+
+    //综合评价 雷达图
+    var radarChart = echarts.init(document.getElementById('radar_chart'), 'walden');
+    var radarOption = {
+        title: {
+            text: '综合指数',
+            textStyle: {
+                color: '#fff',
+                fontSize: 26,
+            },
+        },
+        tooltip: {
+            trigger: "item"
+        },
+        radar: {
+            name: {
+                textStyle: {
+                    color: '#fff',
+                    borderRadius: 3,
+                    padding: [3, 5]
+                }
+            },
+            center: ["50%", "65%"],
+            axisLabel: {
+                fontSize: 22
+            },
+            indicator: [
+                {name: '一年内频率', max: 3},
+                {name: '历史悠久程度', max: 3},
+                {name: '主办方级别', max: 5},
+                {name: '影响范围', max: 6},
+                {name: '热度', max: 3}
+            ],
+            radius: 80,
+            splitLine: {
+                lineStyle: {
+                    color: [
+                        'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                        'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                        'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                    ].reverse()
+                }
+            }
+        },
+        series: [{
+            type: 'radar',
+            itemStyle: {
+                normal: {
+                    areaStyle: {
+                        type: 'default'
+                    },
+                }
+            },
+            tooltip: {
+                formatter: function (params) {
+                    return params.name + ":" + "<br/> 一年内频率：" + params.value[0] +
+                        "<br/> 历史悠久程度：" + params.value[1] +
+                        "<br/> 主办方级别：" + params.value[2] +
+                        "<br/> 影响范围：" + params.value[3] +
+                        "<br/> 热度：" + params.value[4];
+                }
+            },
+            data: [
+                {
+                    value: [1, 2, 2, 3, 3],
+                    name: '未来七天'
+                },
+                {
+                    value: [2, 3, 4, 5, 2],
+                    name: "未来一个月"
+                },
+                {
+                    value: [2, 2, 2, 4, 2],
+                    name: "未来一年"
+                }
+            ]
+        }]
+    };
+
+    radarChart.setOption(radarOption);
+
+    var mapOption = {
+        baseOption: {
+            timeline: {
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                axisType: 'category',
+                playInterval: 3000,
+                label: {
+                    normal: {
+                        color: '#fff'
+                    }
+                }
+            },
+            tooltip: {
+                trigger: "item"
+            },
+            title: {
+                text: '全国展会数据一览',
+                left: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 25
+                }
+            },
+            visualMap: {
+                type: 'continuous',
+                min: 0,
+                max: 120,
+                left: '16px',
+                seriesIndex: 0,
+                realtime: false,
+                calculable: true,
+                color: ['orangered', 'yellow', 'lightskyblue'],
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            geo: {
+                map: 'china',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                roam: true,
+                itemStyle: {
+                    normal: {
+                        areaColor: '#323c48',
+                        borderColor: '#111'
+                    },
+                    emphasis: {
+                        areaColor: '#2a333d'
+                    }
+                }
+            },
+            series: [
+                {
+                    name: "总量",
+                    type: 'scatter',
+                    coordinateSystem: 'geo',
+                    tooltip: {
+                        formatter: function (params) {
+                            place = params.name;
+                            radarUpdate(params.name);
+                            changeSummary(params.name);
+                            return params.name + ":" + "事件总量" + params.value[2];
+                        }
+                    },
+                    label: {
+                        normal: {
+                            formatter: '{b}',
+                            position: 'right',
+                            show: false
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#ddb926'
+                        }
+                    }
+                }
+            ]
+        },
+        options: [
+            {
+                title: {text: "1月全国事件总量"},
+                series: [
+                    {
+                        data: []
+                    }
+                ]
+            },
+            {
+                title: {text: "2月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "3月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "4月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "5月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "6月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "7月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "8月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "9月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "10月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "11月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            },
+            {
+                title: {text: "12月全国事件总量"},
+                series: [
+                    {data: []}
+                ]
+            }
+        ]
+    };
+    mapChart.setOption(mapOption);
+
+    mapChart.on("timelinechanged", function (timeLineChanged) {
+        timeLineIndex = parseInt(timeLineChanged.currentIndex) + 1;
+        //当时间轴改变时改变TOP5
+        changeFive(timeLineIndex);
+        //TOP10
+        updateTopTen(timeLineIndex);
+
+        radarUpdate(place);
+        changeSummary(place);
+        //改变时，改变轮播列表
+        updateListTab(timeLineIndex);
+    });
+
+    //事件类型占比 饼图
+    var eventTypePercent = echarts.init(document.getElementById('event_count_pie'), 'walden');
+    eventTypePercent.setOption({
+        title: {
+            text: '事件类型占比',
+            textStyle: {
+                color: '#fff',
+                fontSize: 26,
+                fontWeight: 'bolder'
+            },
+        },
+        tooltip: {
+            trigger: 'item',
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+            }
+        },
+        calculable: true,
+        series: [
+            {
+                name: '事件类型',
+                type: 'pie',
+                radius: 60,
+                center: ['50%', '50%'],
+                roseType: 'radius',
+                tooltip: {
+                    formatter: function (params) {
+                        type = params.dataIndex + 1;
+                        updateListTab();
+                        return params.name + "：<br/>" + params.value + "(" + params.percent + ")";
+                    }
+                },
+                data: [
+                    {value: 10, name: '展会'},
+                    {value: 5, name: '演唱会'},
+                    {value: 15, name: '体育赛事'},
+                    {value: 25, name: '异常天气'},
+                    {value: 20, name: '政治会议'},
+                    {value: 35, name: '其他会议'}
+                ]
+            }
+        ]
+    });
+
+    //事件总数 柱状图
+    var eventCountBar = echarts.init(document.getElementById('event_count_bar'), 'walden');
+    var eventOption = {
+        title: {
+            text: '事件类型统计',
+            textStyle: {
+                color: '#fff',
+                fontSize: 26,
+                fontWeight: 'bolder'
+            }
+        },
+        grid: {
+            left: "23%"
+        },
+        tooltip: {
+            trigger: "axis",
+            axisPointer: {
+                type: "shadow"
+            }
+        },
+        xAxis: {
+            type: "value",
+            boundaryGap: [0, 0.01],
+            axisLabel: {
+                color: "#fff"
+            }
+        },
+        yAxis: {
+            type: "category",
+            data: ["展会", "演唱会", "体育赛事", "异常天气", "政治会议", "其他会议"],
+            axisLabel: {
+                color: "#fff"
+            }
+        },
+        series: [
+            {
+                type: "bar",
+                data: [1000, 12345, 13331, 1231, 12333, 2334],
+                tooltip: {
+                    formatter: function (params) {
+                        type = params.dataIndex + 1;
+                        updateListTab();
+                        return params.name + "：" + params.value;
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: '#83bff6'},
+                                {offset: 0.5, color: '#188df0'},
+                                {offset: 1, color: '#188df0'}
+                            ]
+                        )
+                    },
+                    emphasis: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: '#2378f7'},
+                                {offset: 0.7, color: '#2378f7'},
+                                {offset: 1, color: '#83bff6'}
+                            ]
+                        )
+                    }
+                }
+            }
+        ]
+    };
+    eventCountBar.setOption(eventOption);
+
+
+    //topFive
+    var topFiveBar = echarts.init(document.getElementById("top_five_bar"), "walden");
+    var topFiveBarOption = {
+        title: {
+            text: 'TOP5热门城市',
+            textStyle: {
+                color: '#fff',
+                fontSize: 26,
+                fontWeight: 'bolder'
+            }
+        },
+        tooltip: {
+            trigger: "axis",
+            axisPointer: {
+                type: "shadow"
+            }
+        },
+        xAxis: [
+            {
+                type: "category",
+                data: ["上海", "北京", "广东", "深圳", "杭州"],
+                axisLabel: {
+                    color: "#fff"
+                },
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: "value",
+                axisLabel: {
+                    color: "#fff"
+                }
+            }
+        ],
+        series: [
+            {
+                name: "展会",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normal: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [123, 152, 142, 152, 164]
+            },
+            {
+                name: "演唱会",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normal: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [12, 32, 32, 45, 52]
+            },
+            {
+                name: "体育赛事",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normal: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [33, 22, 12, 32, 21]
+            },
+            {
+                name: "异常天气",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normal: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [32, 34, 12, 32, 12]
+            },
+            {
+                name: "政治会议",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normal: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [32, 32, 21, 33, 21]
+            },
+            {
+                name: "其他会议",
+                type: "bar",
+                stack: "总量",
+                barWidth: "60%",
+                lable: {
+                    normale: {
+                        show: true,
+                        position: "insideRight"
+                    }
+                },
+                data: [23, 12, 14, 52, 12]
+            }
+        ]
+    };
+
+    topFiveBar.setOption(topFiveBarOption);
+
+
+    //topTen
+    var topTenBar = echarts.init(document.getElementById("top_ten_bar"), "walden");
+    var topTenBarOption = {
+        color: ["#3398DB"],
+        title: {
+            text: 'TOP10 - 未来3个月热门城市',
+            textStyle: {
+                color: '#fff',
+                fontSize: 26,
+                fontWeight: 'bolder'
+            }
+        },
+        tooltip: {
+            trigger: "axis",
+            axisPointer: {
+                type: "shadow"
+            }
+        },
+        xAxis: [
+            {
+                type: "category",
+                data: ["上海", "北京", "深圳", "广东", "杭州", "天津", "武汉", "南京", "成都", "重庆"],
+                axisTick: {
+                    alignWithLable: true
+                },
+                axisLabel: {
+                    color: "#fff"
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: "value",
+                axisLabel: {
+                    color: "#fff"
+                }
+            }
+        ],
+        series: [
+            {
+                name: "总量",
+                type: "bar",
+                barWidth: "60%",
+                data: [2000, 1403, 1502, 1320, 1234, 1532, 1512, 1543, 1567, 1578]
+            }
+        ]
+    };
+    topTenBar.setOption(topTenBarOption);
+
+    //时钟
+    function getTime() {
+        var now = new Date();
+        datetime = echarts.format.formatTime('yyyy年MM月dd日 hh:mm:ss', now.getTime());
+        document.getElementById('datetime-text').innerText = datetime;
+    }
+
+    setInterval(getTime, 1000);
+
+
+    //地图
+    mapChart.showLoading();
+    $.ajax({
+        url: baseUrl + "/chinamap",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (data) {
+            var datas = eval(data);
+            mapChart.hideLoading();
+            mapChart.setOption({
+                options: [
+                    {
+                        title: {text: "1月全国事件总量"},
+                        series: [
+                            {
+                                data: datas[0]
+                            }
+                        ]
+                    },
+                    {
+                        title: {text: "2月全国事件总量"},
+                        series: [
+                            {data: datas[1]}
+                        ]
+                    },
+                    {
+                        title: {text: "3月全国事件总量"},
+                        series: [
+                            {data: datas[2]}
+                        ]
+                    },
+                    {
+                        title: {text: "4月全国事件总量"},
+                        series: [
+                            {data: datas[3]}
+                        ]
+                    },
+                    {
+                        title: {text: "5月全国事件总量"},
+                        series: [
+                            {data: datas[4]}
+                        ]
+                    },
+                    {
+                        title: {text: "6月全国事件总量"},
+                        series: [
+                            {data: datas[5]}
+                        ]
+                    },
+                    {
+                        title: {text: "7月全国事件总量"},
+                        series: [
+                            {data: datas[6]}
+                        ]
+                    },
+                    {
+                        title: {text: "8月全国事件总量"},
+                        series: [
+                            {data: datas[7]}
+                        ]
+                    },
+                    {
+                        title: {text: "9月全国事件总量"},
+                        series: [
+                            {data: datas[8]}
+                        ]
+                    },
+                    {
+                        title: {text: "10月全国事件总量"},
+                        series: [
+                            {data: datas[9]}
+                        ]
+                    },
+                    {
+                        title: {text: "11月全国事件总量"},
+                        series: [
+                            {data: datas[10]}
+                        ]
+                    },
+                    {
+                        title: {text: "12月全国事件总量"},
+                        series: [
+                            {data: datas[11]}
+                        ]
+                    }
+                ]
+            })
+        }
+    })
+
+
+    //用来更新综合评价数据
+    function radarUpdate(name) {
+        if (name == "") {
+            return;
+        }
+        $.ajax({
+            url: baseUrl + "/overallmerit/" + timeLineIndex + "/" + name,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                var datas = eval(data);
+                var res = [
+                    {
+                        value: [datas[0].avgFrequencyYear, datas[0].avgHistory, datas[0].avgOrganizerLevel, datas[0].avgMaxInfluence, datas[0].avgHeat],
+                        name: "未来七天"
+                    },
+                    {
+                        value: [datas[1].avgFrequencyYear, datas[1].avgHistory, datas[1].avgOrganizerLevel, datas[1].avgMaxInfluence, datas[1].avgHeat],
+                        name: "未来一个月"
+                    },
+                    {
+                        value: [datas[2].avgFrequencyYear, datas[2].avgHistory, datas[2].avgOrganizerLevel, datas[2].avgMaxInfluence, datas[2].avgHeat],
+                        name: "未来一个季度"
+                    }
+                ];
+                radarChart.setOption({
+                    title: {
+                        text: '综合指数' + " - " + timeLineIndex + "月 " + name,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 26,
+                        },
+                    }, series: [{data: res}]
+                });
+            }
+        })
+    }
+
+    //更新事件类型占比和事件类型统计数据
+    $.ajax({
+        url: baseUrl + "/eventcount",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (data) {
+            var datas = eval(data);
+            eventTypePercent.setOption({series: [{data: datas}]});
+            eventCountBar.setOption({series: [{data: [datas[0].value, datas[1].value, datas[2].value, datas[3].value, datas[4].value, datas[5].value]}]});
+        }
+    });
+
+    //更新TOP5
+    function changeFive(month) {
+        $.ajax({
+            url: baseUrl + "/" + month + "/hot5city",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                var datas = eval(data);
+                var cityData = [];
+                var showData = [];
+                var singData = [];
+                var peData = [];
+                var weatherData = [];
+                var politicalData = [];
+                var otherData = [];
+                for (var i = 0; i < datas.length; i++) {
+                    cityData.push(datas[i][0].city);
+                    showData.push(datas[i][0].value);
+                    singData.push(datas[i][1].value);
+                    peData.push(datas[i][2].value);
+                    weatherData.push(datas[i][3].value);
+                    politicalData.push(datas[i][4].value);
+                    otherData.push(datas[i][5].value);
+                }
+                topFiveBar.setOption({
+                    title: {
+                        text: month + '月 - TOP5热门城市'
+                    },
+                    xAxis: [
+                        {
+                            data: cityData
+                        }
+                    ],
+                    series: [
+                        {
+                            name: "展会",
+                            data: showData
+                        },
+                        {
+                            name: "演唱会",
+                            data: singData
+                        },
+                        {
+                            name: "体育赛事",
+                            data: peData
+                        },
+                        {
+                            name: "异常天气",
+                            data: weatherData
+                        },
+                        {
+                            name: "政治会议",
+                            data: politicalData
+                        },
+                        {
+                            name: "其他会议",
+                            data: otherData
+                        }
+                    ]
+                });
+            }
+        });
+    }
+
+
+    function updateTopTen(month) {
+        $.ajax({
+            url: baseUrl + "/" + month + "/hot10city",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                var datas = eval(data);
+                topTenBar.setOption({
+                    xAxis: [{
+                        data: [
+                            datas[0].city,
+                            datas[1].city,
+                            datas[2].city,
+                            datas[3].city,
+                            datas[4].city,
+                            datas[5].city,
+                            datas[6].city,
+                            datas[7].city,
+                            datas[8].city,
+                            datas[9].city
+                        ]
+                    }],
+                    series: [{
+                        data: [datas[0].value, datas[1].value, datas[2].value, datas[3].value, datas[4].value, datas[5].value, datas[6].value, datas[7].value, datas[8].value, datas[9].value]
+                    }]
+                });
+            }
+        });
+    }
+
+
+    //更新轮播列表
+    function updateListTab() {
+        if (type == 0) {
+            return;
+        }
+        $.ajax({
+            url: baseUrl + "/" + timeLineIndex + "/" + type + "/eventlist",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                var datas = eval(data);
+                var listhtml = "";
+                for (var i = 0; i < datas.length; i++) {
+                    var event_name = data[i].name;
+                    if (event_name.length > 12) {
+                        listhtml = listhtml + '<li>\n' +
+                            '<div><marquee behavior=alternate direction=left scrollamount=1>' + event_name + '</marquee></div>\n' +
+                            '<div>' + datas[i].city + '</div>\n' +
+                            '<div>' + datas[i].heat + '</div>\n' +
+                            '</li>';
+                    } else {
+                        listhtml = listhtml + '<li>\n' +
+                            '<div>' + event_name + '</div>\n' +
+                            '<div>' + datas[i].city + '</div>\n' +
+                            '<div>' + datas[i].heat + '</div>\n' +
+                            '</li>';
+
+                    }
+
+                }
+                $("#list_tab").html(listhtml);
+            }
+        });
+    }
+
+
+    //更新综合评价
+    function changeSummary(city) {
+        if (city == "") {
+            return;
+        }
+        $.ajax({
+            url: baseUrl + "/summary/" + timeLineIndex + "/" + city,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                var datas = eval(data);
+                $("#summary").text(datas.summary);
+
+                if (datas == null) {
+                    $("#summary").text(datas.summary);
+                }
+            }
+        });
+    }
+
+    //轮播列表
+    function autoScroll(obj) {
+        $(obj).find("ul").animate({
+            marginTop: "-39px"
+        }, 500, function () {
+            $(this).css({marginTop: "0px"}).find("li:first").appendTo(this);
+        })
+    }
+
+    setInterval('autoScroll(".maquee")', 8000);
+
+</script>
+</body>
+
+</html>
