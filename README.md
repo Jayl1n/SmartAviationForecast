@@ -50,7 +50,7 @@
 
 (模过较大，所以没有上传，需要模型可联系[Jaylin](mailto:panja@foxmail.com))
 
-数据采集、数据分析模块均由Python开发，详见[数据采集及分析模块]((https://github.com/CHN-Jaylin/SmartAviationForecast/tree/spider_analy))
+数据采集、数据分析模块均由Python开发，详见[数据采集及分析模块](https://github.com/CHN-Jaylin/SmartAviationForecast/tree/spider_analy)
 
 ## 数据可视化
 
