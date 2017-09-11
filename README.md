@@ -16,3 +16,7 @@
 此模块搭建了一个网站，采用SpringBoot、MyBatis框架开发。
 
 可视化使用百度的Echarts绘图，主要提供了大屏展示功能，适用实时动态展示，监控状态，整个互联网的事件分布情况表现出来。
+
+## 效果图
+
+![效果图](https://github.com/CHN-Jaylin/SmartAviationForecast/blob/master/img/saf-ui.gif)
